@@ -24,10 +24,12 @@ A run must not be called validated until residual behavior, mesh convergence, ti
 
 ## Execution
 1. Install and source a compatible OpenFOAM release.
-2. Extract the case package supplied with this experiment.
-3. Check the dictionaries against the installed release because syntax and library names can differ by version.
-4. Run `chmod +x Allrun && ./Allrun`.
-5. Inspect the generated fields and force history in ParaView and with post-processing tools.
+2. Download `cylinder_re100_validation_case.zip.b64` from this directory.
+3. Decode the package: `base64 -d cylinder_re100_validation_case.zip.b64 > cylinder_re100_validation_case.zip`.
+4. Extract it and enter the case directory.
+5. Check the dictionaries against the installed release because syntax and library names can differ by version.
+6. Run `chmod +x Allrun && ./Allrun`.
+7. Inspect the generated fields and force history in ParaView and with post-processing tools.
 
 ## Validation gates
 - `checkMesh` reports acceptable quality.
