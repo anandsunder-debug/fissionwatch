@@ -60,4 +60,4 @@ def main(argv: list[str] | None = None) -> int:
         return 0
 
     parser.print_help()
-    return 0
+    return 2

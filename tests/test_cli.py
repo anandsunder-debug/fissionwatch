@@ -42,6 +42,14 @@ class CliTests(unittest.TestCase):
         self.assertNotEqual(exit_code, 0)
         self.assertIn("usage:", output.getvalue())
 
+    def test_missing_subcommand_returns_nonzero_exit_code(self):
+        output = io.StringIO()
+        with redirect_stdout(output):
+            exit_code = main([])
+
+        self.assertEqual(exit_code, 2)
+        self.assertIn("usage:", output.getvalue())
+
 
 if __name__ == "__main__":
     unittest.main()
