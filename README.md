@@ -73,7 +73,7 @@ fissionwatch rsri --rho 0.2 --sigma-star 0.5 --cia 0.8
 
 This repository includes a GitHub Actions workflow that:
 
-- builds an sdist and wheel on pushes and tags
+- builds an sdist and wheel on pushes, pull requests, and tags
 - validates the generated artifacts with `twine check`
 - publishes to PyPI only for version tags matching `v*` using GitHub OIDC trusted publishing
 

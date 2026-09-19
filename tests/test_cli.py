@@ -25,6 +25,14 @@ class CliTests(unittest.TestCase):
         self.assertEqual(exit_code, 0)
         self.assertEqual(output.getvalue().strip(), "1.000000")
 
+    def test_rsri_command_prints_numeric_value(self):
+        output = io.StringIO()
+        with redirect_stdout(output):
+            exit_code = main(["rsri", "--rho", "0.2", "--sigma-star", "0.5", "--cia", "0.8"])
+
+        self.assertEqual(exit_code, 0)
+        self.assertEqual(output.getvalue().strip(), "0.179732")
+
 
 if __name__ == "__main__":
     unittest.main()

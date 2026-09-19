@@ -1,5 +1,8 @@
 name: build-and-publish
 
+permissions:
+  contents: read
+
 on:
   push:
   pull_request:
@@ -29,6 +32,7 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     permissions:
+      contents: read
       id-token: write
     environment:
       name: pypi
