@@ -50,7 +50,8 @@ def edge_criticality_shares(graph: DependencyGraph) -> dict[str, float]:
         f"{source}->{target}": float(data.get("coupling", 0.0))
         for source, target, data in graph.edges
     }
-    total = sum(max(value, 0.0) for value in couplings.values())
+    normalized = {key: max(value, 0.0) for key, value in couplings.items()}
+    total = sum(normalized.values())
     if total <= 0:
         return {key: 0.0 for key in couplings}
-    return {key: value / total for key, value in couplings.items()}
+    return {key: value / total for key, value in normalized.items()}

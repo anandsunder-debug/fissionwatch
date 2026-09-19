@@ -10,7 +10,7 @@ from .customer import customer_experience_quality, reliability_adjusted_sri
 
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(prog="fissionwatch")
-    subcommands = parser.add_subparsers(dest="command")
+    subcommands = parser.add_subparsers(dest="command", required=True)
 
     subcommands.add_parser("version", help="print the installed package version")
 

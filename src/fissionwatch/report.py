@@ -30,7 +30,7 @@ def _mermaid_identifier(name: str, index: int) -> str:
 
 
 def _mermaid_label(name: str) -> str:
-    return name.replace('"', '\\"')
+    return name.replace("\r", " ").replace("\n", "<br/>").replace('"', '\\"')
 
 
 def to_mermaid(graph: DependencyGraph) -> str:
