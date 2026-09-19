@@ -4,10 +4,25 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "fissionwatch"
-version = "0.1.0"
-description = "Detect and monitor software chain reactions (fission modes) via graph theory, spectral analysis and telemetry"
+dynamic = ["version"]
+description = "Experimental reliability metrics for software dependency graphs and telemetry"
+readme = {file = "README.md", content-type = "text/markdown"}
 requires-python = ">=3.10"
 dependencies = ["numpy>=1.24", "networkx>=3.0"]
+keywords = ["dependency-graph", "observability", "reliability", "telemetry"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Information Analysis",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
 
 [project.optional-dependencies]
 otel = ["opentelemetry-api>=1.24"]
@@ -15,5 +30,17 @@ otel = ["opentelemetry-api>=1.24"]
 [project.scripts]
 fissionwatch = "fissionwatch.cli:main"
 
+[project.urls]
+Homepage = "https://github.com/anandsunder-debug/fissionwatch"
+Repository = "https://github.com/anandsunder-debug/fissionwatch"
+Issues = "https://github.com/anandsunder-debug/fissionwatch/issues"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
 [tool.setuptools.packages.find]
 where = ["src"]
+include = ["fissionwatch*"]
+
+[tool.setuptools.dynamic]
+version = {attr = "fissionwatch._version.__version__"}
