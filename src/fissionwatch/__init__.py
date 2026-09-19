@@ -10,9 +10,26 @@ from .detectors import Finding
 from .model import Dependency, DependencyGraph, EdgeKind, Node, Trust, Vulnerability
 from .report import markdown, to_mermaid
 from .spectral import condition_report, edge_criticality_shares, modal_analysis, spectral_radius
+from .customer import (
+    CustomerReliabilitySnapshot,
+    capacity_adjusted_sri,
+    capacity_margin,
+    customer_experience_quality,
+    customer_impact_amplification,
+    customer_reliability,
+    customer_trust_index,
+    recovery_elasticity,
+    reliability_adjusted_sri,
+    spectral_resilience,
+    trust_stability,
+)
 
-__version__ = "0.1.0"
+__version__ = "0.1.1"
 __all__ = ["AnalyzerConfig", "FissionAnalyzer", "FissionReport", "Mitigation", "apply_mitigation",
            "classify_regime", "failure_wave", "rf_series", "simulate_cascade", "Finding", "Dependency",
            "DependencyGraph", "EdgeKind", "Node", "Trust", "Vulnerability", "markdown", "to_mermaid",
-           "condition_report", "edge_criticality_shares", "modal_analysis", "spectral_radius"]
+           "condition_report", "edge_criticality_shares", "modal_analysis", "spectral_radius",
+           "CustomerReliabilitySnapshot", "capacity_adjusted_sri", "capacity_margin",
+           "customer_experience_quality", "customer_impact_amplification", "customer_reliability",
+           "customer_trust_index", "recovery_elasticity", "reliability_adjusted_sri",
+           "spectral_resilience", "trust_stability"]
