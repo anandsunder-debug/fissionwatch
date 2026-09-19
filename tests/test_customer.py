@@ -1,5 +1,4 @@
 import unittest
-import numpy as np
 from fissionwatch.customer import (
     capacity_adjusted_sri, customer_experience_quality,
     customer_trust_index, reliability_adjusted_sri,
