@@ -1,5 +1,6 @@
 import io
 import unittest
+from contextlib import redirect_stderr
 from contextlib import redirect_stdout
 
 from fissionwatch import __version__
@@ -32,6 +33,14 @@ class CliTests(unittest.TestCase):
 
         self.assertEqual(exit_code, 0)
         self.assertEqual(output.getvalue().strip(), "0.179732")
+
+    def test_invalid_arguments_return_nonzero_exit_code(self):
+        output = io.StringIO()
+        with redirect_stderr(output):
+            exit_code = main(["ceq", "--availability", "1.0"])
+
+        self.assertNotEqual(exit_code, 0)
+        self.assertIn("usage:", output.getvalue())
 
 
 if __name__ == "__main__":
