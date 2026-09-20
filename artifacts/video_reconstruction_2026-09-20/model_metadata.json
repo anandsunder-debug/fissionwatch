@@ -1,0 +1,15 @@
+{
+  "length_mm": 100.0,
+  "diameter_mm": 3.0,
+  "radius_mm": 1.5,
+  "shape": "capped cylinder",
+  "scale": "assumed, not video-verified",
+  "scope": "inert external solid mock-up",
+  "excluded": [
+    "internal cavity",
+    "combustion",
+    "nozzle",
+    "pressure",
+    "thrust"
+  ]
+}
