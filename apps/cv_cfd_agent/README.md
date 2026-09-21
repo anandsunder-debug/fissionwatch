@@ -1,11 +1,12 @@
 # CV → Flow Analysis Agent
 
-A lightweight Streamlit proof of concept that converts a geometry image into an inspectable analysis workflow:
+A Streamlit proof of concept that converts a geometry image into an inspectable workflow:
 
 1. **Vision agent** — decodes the image, thresholds foreground pixels, and extracts the largest contour.
-2. **Geometry agent** — reports pixel area, bounding box, and aspect ratio.
-3. **Analysis agent** — renders a qualitative vector-field surrogate around the image mask.
-4. **Report agent** — produces an evidence and validation-status summary.
+2. **Geometry agent** — reports pixel area, perimeter, bounding box, and aspect ratio.
+3. **Calculation agent** — computes external-flow screening quantities: Reynolds number, Mach screening value, dynamic pressure, and uncertainty ranges.
+4. **Analysis agent** — renders a qualitative vector-field surrogate around the image mask.
+5. **Report agent** — produces an evidence and validation-status summary.
 
 ## Run locally
 
@@ -18,6 +19,8 @@ pip install -r requirements.txt
 streamlit run app.py
 ```
 
-## Scope and limitations
+## Scope and safety boundary
 
-This is **not a CFD solver**. It does not calculate combustion, chamber pressure, thrust, nozzle performance, thermal loads, or structural safety. The plotted field is a qualitative visualization surrogate and should not be used to construct, optimize, or operate a propulsion device. For validated CFD, use a qualified solver with documented geometry, mesh, boundary conditions, material models, convergence criteria, and experimental validation.
+This is **not a CFD solver**. The app supports bounded, low-speed external-flow screening only. It deliberately excludes combustion chemistry, internal chamber-pressure prediction, thrust calculation, nozzle optimization, thermal failure prediction, and structural safety sizing. These calculations could enable construction or optimization of a hazardous propulsion device and require qualified engineering workflows.
+
+All image-derived geometry is approximate. For validated CFD, use a qualified solver with documented geometry, mesh, boundary conditions, material models, convergence criteria, uncertainty quantification, and experimental validation.
