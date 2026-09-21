@@ -33,6 +33,11 @@ The repository does not provide instructions for constructing, sealing, pressuri
 - [Validation and limitations](docs/matchstick-rocket/04-validation-and-limitations.md)
 - [Evidence classification](docs/matchstick-rocket/05-evidence-register.md)
 
+## Rocket visuals
+
+![Matchstick rocket external profile](docs/matchstick-rocket/images/rocket-profile.svg)
+![Matchstick rocket cross-section concept](docs/matchstick-rocket/images/rocket-cross-section.svg)
+
 ## Repository scope
 
 The original FissionWatch software-reliability research remains the primary software project. The matchstick-rocket materials are maintained as a separate research case study under `docs/matchstick-rocket/`.
