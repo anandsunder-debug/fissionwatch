@@ -1,0 +1,19 @@
+name: SAI tests
+on:
+  push:
+    paths: ["sai_indexing/**"]
+  pull_request:
+    paths: ["sai_indexing/**"]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: sai_indexing
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install -r requirements.txt
+      - run: PYTHONPATH=. pytest -q

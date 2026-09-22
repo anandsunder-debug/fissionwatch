@@ -1,0 +1,6 @@
+sampling_rate: 0.10
+minimum_roi_percent: 10
+rollback_regression_percent: 5
+max_changes_per_hour: 3
+high_load_threshold_percent: 80
+execution_mode: recommendation_only
