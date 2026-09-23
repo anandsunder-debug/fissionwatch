@@ -4,6 +4,7 @@ on:
     paths: ["sai_indexing/**"]
   pull_request:
     paths: ["sai_indexing/**"]
+  workflow_dispatch:
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -15,5 +16,12 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
-      - run: pip install -r requirements.txt
-      - run: PYTHONPATH=. pytest -q
+      - run: pip install -r requirements.txt pytest-html
+      - run: mkdir -p test-results
+      - run: PYTHONPATH=. pytest -q --junitxml=test-results/junit.xml --html=test-results/pytest-report.html --self-contained-html
+      - run: python scripts/render_test_report.py --junit test-results/junit.xml --output test-results/index.html --metrics test-results/metrics.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: sai-test-results
+          path: sai_indexing/test-results
