@@ -38,6 +38,13 @@ The repository does not provide instructions for constructing, sealing, pressuri
 ![Matchstick rocket external profile](docs/matchstick-rocket/images/rocket-profile.svg)
 ![Matchstick rocket cross-section concept](docs/matchstick-rocket/images/rocket-cross-section.svg)
 
+## Agentic application
+
+- [CV → Flow Analysis Agent](apps/cv_cfd_agent/README.md)
+- [Streamlit application](apps/cv_cfd_agent/app.py)
+
+The application runs a vision → geometry → qualitative-flow-surrogate → report pipeline. It is intentionally not a validated CFD solver and excludes combustion, pressure, thrust, nozzle optimization, and safety-critical calculations.
+
 ## Repository scope
 
 The original FissionWatch software-reliability research remains the primary software project. The matchstick-rocket materials are maintained as a separate research case study under `docs/matchstick-rocket/`.
