@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="220" viewBox="0 0 900 220" role="img" aria-labelledby="title desc">
+  <title id="title">Matchstick Rocket External Profile</title>
+  <desc id="desc">Safe external profile illustration used for documentation.</desc>
+  <defs>
+    <linearGradient id="bodyFill" x1="0" x2="1" y1="0" y2="0">
+      <stop offset="0%" stop-color="#f5c16c"/>
+      <stop offset="60%" stop-color="#d88f3d"/>
+      <stop offset="100%" stop-color="#b16a2c"/>
+    </linearGradient>
+  </defs>
+  <rect x="0" y="0" width="900" height="220" fill="#f8f9fb"/>
+  <line x1="100" y1="185" x2="800" y2="185" stroke="#9aa3b2" stroke-width="2" stroke-dasharray="8 8"/>
+
+  <rect x="180" y="87" width="500" height="46" rx="23" fill="url(#bodyFill)" stroke="#7a4a22" stroke-width="2"/>
+  <polygon points="680,87 750,110 680,133" fill="#cb6c2f" stroke="#7a4a22" stroke-width="2"/>
+  <circle cx="220" cy="110" r="14" fill="#ffe6aa" stroke="#7a4a22" stroke-width="2"/>
+
+  <line x1="180" y1="62" x2="750" y2="62" stroke="#2f4f6f" stroke-width="2"/>
+  <line x1="180" y1="56" x2="180" y2="68" stroke="#2f4f6f" stroke-width="2"/>
+  <line x1="750" y1="56" x2="750" y2="68" stroke="#2f4f6f" stroke-width="2"/>
+  <text x="465" y="48" text-anchor="middle" font-family="Georgia, serif" font-size="18" fill="#1f2a38">Assumed Length: 100 mm</text>
+
+  <line x1="150" y1="87" x2="150" y2="133" stroke="#2f4f6f" stroke-width="2"/>
+  <line x1="144" y1="87" x2="156" y2="87" stroke="#2f4f6f" stroke-width="2"/>
+  <line x1="144" y1="133" x2="156" y2="133" stroke="#2f4f6f" stroke-width="2"/>
+  <text x="132" y="114" text-anchor="end" font-family="Georgia, serif" font-size="16" fill="#1f2a38">3 mm dia</text>
+
+  <text x="450" y="205" text-anchor="middle" font-family="Georgia, serif" font-size="15" fill="#3b4452">External-envelope visual only (non-reactive, documentation use)</text>
+</svg>

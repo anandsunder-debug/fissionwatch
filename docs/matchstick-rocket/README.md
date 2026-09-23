@@ -26,3 +26,10 @@ The source conversation included visual panels covering:
 - Design-variant comparison
 
 The visual panels are referenced as source material in the documentation. Raw binary images, video, CAD files, and solver cases should be added separately when their exact files and provenance are available.
+
+## Published visuals
+
+The following documentation-safe visuals are published directly in this repository for GitHub rendering:
+
+![External profile](images/rocket-profile.svg)
+![Cross-section concept](images/rocket-cross-section.svg)

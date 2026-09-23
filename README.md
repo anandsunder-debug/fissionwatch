@@ -33,6 +33,11 @@ The repository does not provide instructions for constructing, sealing, pressuri
 - [Validation and limitations](docs/matchstick-rocket/04-validation-and-limitations.md)
 - [Evidence classification](docs/matchstick-rocket/05-evidence-register.md)
 
+## Rocket visuals
+
+![Matchstick rocket external profile](docs/matchstick-rocket/images/rocket-profile.svg)
+![Matchstick rocket cross-section concept](docs/matchstick-rocket/images/rocket-cross-section.svg)
+
 ## Agentic application
 
 - [CV → Flow Analysis Agent](apps/cv_cfd_agent/README.md)
