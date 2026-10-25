@@ -1,14 +1,16 @@
-# CANCE — Counterfactual Narrative Engine
+# CANCE — Causal Analysis and Counterfactual Narrative Engine
 
-A small Streamlit prototype for causal what-if analysis of narrative decisions. The initial case study is *Zubeidaa* (2001), with five relationship-mediated information interventions.
+CANCE is a generic Streamlit prototype for exploring how a change to any user-supplied plot, screenplay, novel, game narrative, or scenario can lead to multiple alternative outcomes. It creates structured causal chains so a reader can inspect the link between a counterfactual intervention, a decision, and downstream consequences.
 
 ## Features
 
-- Five counterfactual branches, each with intervention, causal chain, character response, alternative ending, thematic implications, assumptions, and qualitative uncertainty.
-- Explicit separation between broad established story facts and invented counterfactual events.
-- Character-preservation checklist.
-- Markdown and JSON report export.
-- No fabricated empirical probabilities.
+- Paste any plot or synopsis; identify a consequential decision and a what-if intervention.
+- Generate 3–10 alternative outcome branches using distinct causal lenses.
+- Inspect a seven-step chain: baseline, intervention, mechanism, decision response, immediate consequence, downstream propagation, and outcome.
+- Specify character-preservation constraints and world / chronology constraints.
+- View each branch's assumptions, evidence basis, hypothesis status, and consistency checks.
+- Export the full analysis as Markdown or JSON.
+- No invented numeric probabilities.
 
 ## Quick start
 
@@ -29,29 +31,30 @@ Open the local URL printed by Streamlit (typically http://localhost:8501).
 
 ## How to use
 
-1. Review or edit the intervention text in the sidebar.
-2. Select one or more of the five branches.
-3. Review the character-preservation checklist and add analyst notes.
-4. Expand a branch to inspect its causal chain, assumptions, ending, and uncertainty.
-5. Download a Markdown report for reading or a JSON report for downstream processing.
+1. Paste a plot, synopsis, scene, quest, or scenario into **Plot / synopsis**.
+2. Enter the key decision or turning point.
+3. State the counterfactual change (for example, a witness reveals evidence earlier).
+4. Specify character traits and world constraints that must remain consistent.
+5. Choose the tone and number of outcomes, then select **Generate counterfactual outcomes**.
+6. Expand each outcome and audit every causal step and its stated basis.
+7. Download the Markdown report for review or JSON for downstream processing.
 
-## Causal interpretation
+## Causal model
 
-The app uses the conceptual transition:
+Each branch follows the conceptual chain:
 
-`X[t+1] = F(X[t], A[t], W[t])`
+`Baseline → Intervention → Mechanism → Decision response → Immediate consequence → Feedback → Alternative outcome`
 
-with a hypothetical intervention `do(I[t] = i)`. Here `X` is narrative state, `A` is the character's action, and `W` represents external circumstances. A belief change does not guarantee a decision change, and a decision change does not guarantee a different outcome.
+The purpose is traceability, not certainty. A changed input may not change a decision; a changed decision may not change the final outcome; other characters and external events can amplify or reverse an effect.
 
-## Evidence and limitations
+## Important limitations
 
-- The app is a qualitative analysis prototype, not a predictive model trained on annotated scripts.
-- The baseline facts are broad narrative elements, not a scene-by-scene verified dataset.
-- Each disclosure and alternative ending is explicitly hypothetical.
-- Uncertainty labels are qualitative, not calibrated probabilities.
-- The final-flight branch does not assume a specific preventable warning, mechanical defect, or definitive causal explanation.
-
-For research-grade use, annotate scenes, character knowledge states, decision points, causal dependencies, and downstream consequences. Evaluate branches for character consistency, causal traceability, and minimal-change consistency.
+- This version is a **structured, rule-based scaffold**, not an LLM-powered story-understanding system. It uses the supplied plot and user constraints as text, and generates branch drafts from causal templates.
+- It does not independently verify plot facts, understand every implied dependency, or retrieve source texts.
+- The generated narratives are hypotheses to revise, not canonical facts, forecasts, or claims of what an author intended.
+- Uncertainty is qualitative; the app does not calculate calibrated likelihoods.
+- For higher-quality analysis, make the decision point and intervention specific, add explicit character/world constraints, and manually review whether each causal edge is justified.
+- A future LLM integration could enrich plot parsing, extract characters and events, build a scene-level causal graph, and critique unsupported links. That integration is not included in this version.
 
 ## Repository layout
 
