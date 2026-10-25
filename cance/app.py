@@ -158,7 +158,7 @@ def alternate_plots_markdown(report: dict[str, Any]) -> str:
             "### Variation tags",
             ", ".join(c["variation_tags"]),
         ])
-    return "\\n".join(out) + "\\n"
+    return "\n".join(out) + "\n"
 
 st.set_page_config(page_title="CANCE Movie Generator", page_icon="🎬", layout="wide")
 st.title("CANCE · Causal Movie Generator")
