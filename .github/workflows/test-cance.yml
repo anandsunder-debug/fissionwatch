@@ -10,6 +10,8 @@ on:
       - "cance/**"
       - ".github/workflows/test-cance.yml"
   workflow_dispatch:
+  schedule:
+    - cron: "17 2 * * *"
 
 permissions:
   contents: read
