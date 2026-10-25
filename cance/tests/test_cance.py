@@ -14,7 +14,7 @@ def literal_assignment(module_ast, variable_name):
     raise AssertionError(f"Could not find literal assignment for {variable_name}")
 
 
-class CanceModelTests(unittest.TestCase):
+class CanceGraphTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.source = APP_PATH.read_text(encoding="utf-8")
@@ -24,37 +24,31 @@ class CanceModelTests(unittest.TestCase):
     def test_app_parses_as_python(self):
         self.assertIsNotNone(self.tree)
 
-    def test_has_multiple_distinct_causal_lenses(self):
+    def test_has_multiple_causal_lenses(self):
         self.assertGreaterEqual(len(self.lenses), 8)
-        self.assertEqual(len({lens["name"] for lens in self.lenses}), len(self.lenses))
-        self.assertTrue(all(lens["mechanism"] and lens["focus"] for lens in self.lenses))
+        self.assertEqual(len({lens[0] for lens in self.lenses}), len(self.lenses))
 
-    def test_generic_inputs_and_branch_generator_exist(self):
-        for term in ("plot", "decision", "intervention", "character_rules", "world_rules"):
-            self.assertIn(term, self.source)
-        self.assertIn("def make_branches", self.source)
-        self.assertIn("def build_report", self.source)
+    def test_graph_engine_functions_exist(self):
+        for name in ("parse_nodes", "parse_edges", "descendants", "validate_graph",
+                     "graph_dot", "generate_branches", "build_report"):
+            self.assertTrue(any(isinstance(n, ast.FunctionDef) and n.name == name for n in self.tree.body), name)
 
-    def test_traceability_fields_exist(self):
-        for term in ('"Baseline"', '"Intervention"', '"Mechanism"', '"Decision response"',
-                     '"Immediate consequence"', '"Downstream propagation"', '"Outcome"',
-                     '"basis"', '"status"', '"assumptions"', '"checks"'):
+    def test_traceability_and_exports_exist(self):
+        for term in ("causal_chain", "basis", "status", "assumptions", "report_markdown",
+                     "download_button", "json.dumps"):
             self.assertIn(term, self.source)
 
-    def test_exports_markdown_and_json(self):
-        self.assertIn("report_markdown", self.source)
-        self.assertIn("json.dumps", self.source)
-        self.assertIn("download_button", self.source)
+    def test_cycle_detection_and_unknown_endpoint_validation(self):
+        self.assertIn("contains a cycle", self.source)
+        self.assertIn("unknown node", self.source.lower())
 
-    def test_no_calibrated_numeric_probabilities_claimed(self):
-        self.assertIn("No numeric probabilities are assigned", self.source)
-        self.assertIn("not calibrated", self.source.lower())
+    def test_no_calibrated_probability_claim(self):
+        self.assertIn("No calibrated probabilities", self.source)
+        self.assertIn("Qualitative; not calibrated", self.source)
 
-    def test_not_tied_to_one_film(self):
+    def test_generic_not_film_specific(self):
         self.assertNotIn("Zubeidaa", self.source)
-        self.assertIn("Plot / synopsis", self.source)
-        self.assertIn("Generate counterfactual outcomes", self.source)
-
+        self.assertIn("Generic Causal Graph Engine", self.source)
 
 if __name__ == "__main__":
     unittest.main()
