@@ -1,5 +1,4 @@
 import ast
-import json
 from pathlib import Path
 import unittest
 
@@ -20,36 +19,41 @@ class CanceModelTests(unittest.TestCase):
     def setUpClass(cls):
         cls.source = APP_PATH.read_text(encoding="utf-8")
         cls.tree = ast.parse(cls.source, filename=str(APP_PATH))
-        cls.branches = literal_assignment(cls.tree, "BRANCHES")
-        cls.facts = literal_assignment(cls.tree, "ESTABLISHED_FACTS")
-        cls.invented = literal_assignment(cls.tree, "INVENTED_EVENTS")
+        cls.lenses = literal_assignment(cls.tree, "LENSES")
 
     def test_app_parses_as_python(self):
         self.assertIsNotNone(self.tree)
 
-    def test_has_five_distinct_branches(self):
-        self.assertEqual(len(self.branches), 5)
-        self.assertEqual(len({branch["id"] for branch in self.branches}), 5)
+    def test_has_multiple_distinct_causal_lenses(self):
+        self.assertGreaterEqual(len(self.lenses), 8)
+        self.assertEqual(len({lens["name"] for lens in self.lenses}), len(self.lenses))
+        self.assertTrue(all(lens["mechanism"] and lens["focus"] for lens in self.lenses))
 
-    def test_every_branch_has_required_fields(self):
-        required = {
-            "intervention", "causal_chain", "response", "ending", "themes",
-            "assumptions", "uncertainty", "uncertainty_reason", "mechanism"
-        }
-        for branch in self.branches:
-            self.assertTrue(required.issubset(branch.keys()), branch["name"])
-            self.assertGreaterEqual(len(branch["causal_chain"]), 3)
-            self.assertGreaterEqual(len(branch["assumptions"]), 1)
+    def test_generic_inputs_and_branch_generator_exist(self):
+        for term in ("plot", "decision", "intervention", "character_rules", "world_rules"):
+            self.assertIn(term, self.source)
+        self.assertIn("def make_branches", self.source)
+        self.assertIn("def build_report", self.source)
 
-    def test_no_empirical_probabilities_are_encoded(self):
-        serialized = json.dumps(self.branches).lower()
-        self.assertNotIn("survival_probability", serialized)
-        self.assertNotIn("p=0.", serialized)
+    def test_traceability_fields_exist(self):
+        for term in ('"Baseline"', '"Intervention"', '"Mechanism"', '"Decision response"',
+                     '"Immediate consequence"', '"Downstream propagation"', '"Outcome"',
+                     '"basis"', '"status"', '"assumptions"', '"checks"'):
+            self.assertIn(term, self.source)
 
-    def test_film_facts_and_hypotheticals_are_separate(self):
-        self.assertTrue(self.facts)
-        self.assertTrue(self.invented)
-        self.assertTrue(any("invented" in item.lower() for item in self.invented))
+    def test_exports_markdown_and_json(self):
+        self.assertIn("report_markdown", self.source)
+        self.assertIn("json.dumps", self.source)
+        self.assertIn("download_button", self.source)
+
+    def test_no_calibrated_numeric_probabilities_claimed(self):
+        self.assertIn("No numeric probabilities are assigned", self.source)
+        self.assertIn("not calibrated", self.source.lower())
+
+    def test_not_tied_to_one_film(self):
+        self.assertNotIn("Zubeidaa", self.source)
+        self.assertIn("Plot / synopsis", self.source)
+        self.assertIn("Generate counterfactual outcomes", self.source)
 
 
 if __name__ == "__main__":
