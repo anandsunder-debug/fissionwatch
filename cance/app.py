@@ -126,6 +126,40 @@ def markdown_report(report: dict[str, Any]) -> str:
                 "", "### Reward caveat", c["reward_caveat"]]
     return "\n".join(out) + "\n"
 
+def alternate_plots_markdown(report: dict[str, Any]) -> str:
+    """Export each generated plot branch as a standalone, portable Markdown file."""
+    out = [
+        "# CANCE — Alternate Plot Branches",
+        "",
+        f"**Working title:** {report['inputs'].get('title', 'Untitled Film')}",
+        f"**Generated (UTC):** {report['generated_at_utc']}",
+        f"**Number of alternatives:** {len(report['candidates'])}",
+        "",
+        "> These are generated screenplay scaffolds. Reward values are heuristic proxies, not validated audience ratings.",
+    ]
+    for c in report["candidates"]:
+        out.extend([
+            "",
+            "---",
+            "",
+            f"## Alternative {c.get('rank', c['id'])}: {c['title']}",
+            "",
+            f"**Genre / tone:** {c['genre']} / {c['tone']}",
+            f"**Variation operator:** {c['variation']}",
+            f"**Utility reward:** {c['reward_score']}/10",
+            f"**Logline:** {c['logline']}",
+            "",
+            "### Causal path",
+            c["causal_summary"],
+            "",
+            "### Scene-by-scene plot",
+            c["script_draft"],
+            "",
+            "### Variation tags",
+            ", ".join(c["variation_tags"]),
+        ])
+    return "\\n".join(out) + "\\n"
+
 st.set_page_config(page_title="CANCE Movie Generator", page_icon="🎬", layout="wide")
 st.title("CANCE · Causal Movie Generator")
 st.caption("Generate multiple film trajectories, score them with a transparent utility function, and measure variation.")
@@ -208,8 +242,9 @@ else:
     if diversity["pairwise"]:
         st.dataframe([{"Candidate A": p["a"], "Candidate B": p["b"], "Text similarity": p["similarity"], "Variation distance": p["variation_distance"]} for p in diversity["pairwise"]], hide_index=True, use_container_width=True)
     st.subheader("Export")
-    left, right = st.columns(2)
-    left.download_button("Download Markdown report", markdown_report(report), file_name="cance_movie_generator_report.md", mime="text/markdown", use_container_width=True)
+    left, middle, right = st.columns(3)
+    left.download_button("Download full Markdown report", markdown_report(report), file_name="cance_movie_generator_report.md", mime="text/markdown", use_container_width=True)
+    middle.download_button("Save alternate plots (.md)", alternate_plots_markdown(report), file_name="cance_alternate_plots.md", mime="text/markdown", use_container_width=True)
     right.download_button("Download JSON candidates + reward scores", json.dumps(report, ensure_ascii=False, indent=2), file_name="cance_movie_generator_report.json", mime="application/json", use_container_width=True)
     st.caption("CANCE Movie Generator v" + APP_VERSION + " · The current version generates structured scene-beat drafts, not finished film or video.")
 
