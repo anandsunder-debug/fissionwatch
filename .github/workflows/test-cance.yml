@@ -1,0 +1,100 @@
+name: CANCE automated tests
+
+on:
+  push:
+    paths:
+      - "cance/**"
+      - ".github/workflows/test-cance.yml"
+  pull_request:
+    paths:
+      - "cance/**"
+      - ".github/workflows/test-cance.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: cance-tests-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    name: Python ${{ matrix.python-version }} tests
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.10", "3.11", "3.12"]
+
+    defaults:
+      run:
+        working-directory: cance
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: pip
+          cache-dependency-path: cance/requirements.txt
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r requirements.txt
+          python -m pip install pytest
+
+      - name: Compile Python sources
+        run: python -m compileall -q app.py tests
+
+      - name: Run tests and generate machine-readable results
+        id: pytest
+        continue-on-error: true
+        shell: bash
+        run: |
+          mkdir -p test-results
+          set +e
+          python -m pytest -v tests --junitxml=test-results/junit.xml 2>&1 | tee test-results/pytest-output.txt
+          rc=${PIPESTATUS[0]}
+          echo "exit_code=$rc" >> "$GITHUB_OUTPUT"
+          exit 0
+
+      - name: Write test summary
+        if: always()
+        env:
+          PYTHON_VERSION: ${{ matrix.python-version }}
+          TEST_EXIT_CODE: ${{ steps.pytest.outputs.exit_code }}
+        run: |
+          {
+            echo "## CANCE test results — Python ${PYTHON_VERSION}"
+            echo
+            if [ "${TEST_EXIT_CODE}" = "0" ]; then
+              echo "**Status: PASS**"
+            else
+              echo "**Status: FAIL** (exit code: ${TEST_EXIT_CODE:-unknown})"
+            fi
+            echo
+            echo '--- Pytest output ---'
+            if [ -f test-results/pytest-output.txt ]; then
+              tail -n 40 test-results/pytest-output.txt
+            else
+              echo "Pytest did not produce output."
+            fi
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Upload test reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cance-test-results-python-${{ matrix.python-version }}
+          path: cance/test-results/
+          if-no-files-found: warn
+          retention-days: 14
+
+      - name: Fail job when tests fail
+        if: steps.pytest.outputs.exit_code != '0'
+        run: exit 1
