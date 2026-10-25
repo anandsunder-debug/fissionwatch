@@ -18,7 +18,8 @@ class CanceGraphTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.source = APP_PATH.read_text(encoding="utf-8")
-        cls.tree = ast.parse(cls.source, filename=str(APP_PATH))
+        cls.tree = ast.parse(cls.source, filename=str(APP_PATH)
+        )
         cls.lenses = literal_assignment(cls.tree, "LENSES")
 
     def test_app_parses_as_python(self):
@@ -42,9 +43,9 @@ class CanceGraphTests(unittest.TestCase):
         self.assertIn("contains a cycle", self.source)
         self.assertIn("unknown node", self.source.lower())
 
-    def test_no_calibrated_probability_claim(self):
-        self.assertIn("No calibrated probabilities", self.source)
-        self.assertIn("Qualitative; not calibrated", self.source)
+    def test_probabilities_are_not_claimed_as_calibrated(self):
+        self.assertIn("no numeric probabilities are assigned", self.source.lower())
+        self.assertIn("qualitative; not calibrated", self.source.lower())
 
     def test_generic_not_film_specific(self):
         self.assertNotIn("Zubeidaa", self.source)
