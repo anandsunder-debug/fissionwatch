@@ -177,8 +177,12 @@ if "cance_graph_report" not in st.session_state: st.session_state.cance_graph_re
 if run:
     try:
         nodes = parse_nodes(nodes_raw)
+        inferred = False
         if not nodes and use_inferred and (plot or "").strip():
             nodes, edges = infer_nodes_from_plot(plot)
+            inferred = True
+            if nodes and target not in {n["id"] for n in nodes}:
+                target = nodes[0]["id"]
         else:
             edges = parse_edges(edges_raw, {n["id"] for n in nodes})
         errors = validate_graph(nodes, edges)
